@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mappers.boardMapper">
+
+	<insert id="insertBoard">
+		INSERT INTO BOARD(
+		       NUM
+		     , NAME
+		     , PASS
+		     , SUBJECT
+		     , CONTENT
+		     , READCOUNT
+		     , DATE
+		     , FILE
+		       )
+		VALUES (
+		       #{num}
+		     , #{name}
+		     , #{pass}
+		     , #{subject}
+		     , #{content}
+		     , #{readcount}
+		     , #{date}
+		     , #{file}
+		     )
+	</insert>
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT MAX(NUM)
+		  FROM BOARD
+	</select>
+	
+	<select id="getBoardList" resultType="com.itwillbs.domain.BoardDTO">
+		SELECT *
+		  FROM BOARD
+		 ORDER BY NUM DESC
+		 LIMIT #{startRow}
+		     , #{pageSize}
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM BOARD
+	</select>
+	
+	<select id="getBoard" resultType="com.itwillbs.domain.BoardDTO">
+		SELECT *
+		  FROM BOARD
+		 WHERE NUM = #{num}
+	</select>
+	
+	<select id="numCheck" resultType="com.itwillbs.domain.BoardDTO">
+		SELECT *
+		  FROM BOARD
+		 WHERE NUM = #{num}
+		   AND PASS = #{pass}
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE BOARD
+		   SET SUBJECT = #{subject}
+		     , CONTENT = #{content}
+		 WHERE NUM = #{num}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE FROM BOARD
+		 WHERE NUM = #{num}
+	</delete>
+
+
+</mapper>
